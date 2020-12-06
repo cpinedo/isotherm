@@ -1,4 +1,4 @@
-FROM openjdk:8-jre-slim
+FROM balenalib/raspberry-pi-openjdk:8-stretch
 
 EXPOSE 8080
 
