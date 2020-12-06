@@ -1,0 +1,29 @@
+# Use postgres/example user/password credentials
+version: '3.1'
+
+services:
+  postgres:
+    image: library/postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ../deployment/database:/docker-entrypoint-initdb.d/
+    ports:
+      - 5432:5432
+
+  pgadmin:
+    image: dpage/pgadmin4
+    depends_on:
+      - isotherm
+      - postgres
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user@domain.com
+      PGADMIN_DEFAULT_PASSWORD: postgres
+    volumes:
+      - ./pgdata:/var/lib/pgadmin
+    ports:
+      - 5555:80
+
