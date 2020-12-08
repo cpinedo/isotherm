@@ -35,3 +35,6 @@ docker swarm init
 
 ### Access pgadmin4
 [http://127.0.0.1:5555](http://127.0.0.1:5555)
+
+### Termometer installation
+https://www.todavianose.com/leer-temperatura-de-un-sensor-ds18b20-con-raspberry-pi/
