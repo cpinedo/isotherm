@@ -1,8 +1,8 @@
 package com.marespinos.isotherm.infrastructure.rest;
 
 import com.marespinos.isotherm.application.gettemperature.GetTemperatureCommand;
-import com.marespinos.isotherm.application.services.temperatureReader.TemperatureReading;
 import com.marespinos.isotherm.framework.CommandExecutor;
+import com.marespinos.isotherm.infrastructure.external.temperaturereader.TemperatureReadingResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +22,7 @@ public class TemperatureResource {
         return CompletableFuture
                 .supplyAsync(GetTemperatureCommand::new)
                 .thenCompose(commandExecutor::executeCommand)
-                .thenApply(r -> (TemperatureReading) r)
+                .thenApply(r -> (TemperatureReadingResponse) r)
                 .thenApply(TemperatureDto::of);
     }
 }

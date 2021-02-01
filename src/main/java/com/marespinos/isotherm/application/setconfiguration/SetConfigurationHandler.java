@@ -1,6 +1,9 @@
 package com.marespinos.isotherm.application.setconfiguration;
 
 import com.marespinos.isotherm.application.services.configuration.ConfigurationService;
+import com.marespinos.isotherm.domain.Configuration;
+import com.marespinos.isotherm.domain.valueobjects.TemperatureMax;
+import com.marespinos.isotherm.domain.valueobjects.TemperatureMin;
 import com.marespinos.isotherm.framework.Handler;
 import com.marespinos.isotherm.framework.Request;
 import org.slf4j.Logger;
@@ -21,7 +24,8 @@ public class SetConfigurationHandler implements Handler<SetConfigurationCommand,
     public CompletableFuture<Void> handle(Request command) throws IOException {
         logger.info(command.toString());
         SetConfigurationCommand configurationCommand = (SetConfigurationCommand) command;
-        return configurationService.setConfiguration(1, configurationCommand.getMinTemp(), configurationCommand.getMaxTemp());
+        Configuration configuration = Configuration.of(TemperatureMin.of(configurationCommand.getMinTemp()), TemperatureMax.of(configurationCommand.getMaxTemp()));
+        return configurationService.setConfiguration(1, configuration);
     }
 
 }

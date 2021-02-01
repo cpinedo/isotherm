@@ -1,6 +1,6 @@
 package com.marespinos.isotherm.infrastructure.rest;
 
-import com.marespinos.isotherm.application.services.temperatureReader.TemperatureReading;
+import com.marespinos.isotherm.infrastructure.external.temperaturereader.TemperatureReadingResponse;
 
 import java.util.List;
 import java.util.Objects;
@@ -14,11 +14,11 @@ public class TemperatureDto {
         this.mean = mean;
     }
 
-    public static TemperatureDto of(TemperatureReading source) {
+    public static TemperatureDto of(TemperatureReadingResponse source) {
         return new TemperatureDto(source);
     }
 
-    public TemperatureDto(TemperatureReading source) {
+    public TemperatureDto(TemperatureReadingResponse source) {
         temperatures = source.getRawTemperatures();
         mean = source.getMean();
     }

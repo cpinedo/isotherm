@@ -3,6 +3,8 @@ package com.marespinos.isotherm.infrastructure.configuration;
 import com.marespinos.isotherm.application.services.configuration.ConfigurationData;
 import com.marespinos.isotherm.application.services.configuration.ConfigurationService;
 import com.marespinos.isotherm.domain.Configuration;
+import com.marespinos.isotherm.domain.valueobjects.TemperatureMax;
+import com.marespinos.isotherm.domain.valueobjects.TemperatureMin;
 import com.marespinos.isotherm.infrastructure.repository.ConfigurationEntity;
 import com.marespinos.isotherm.infrastructure.repository.ConfigurationRepository;
 import org.springframework.stereotype.Service;
@@ -22,16 +24,16 @@ public class ConfigurationAdaptor implements ConfigurationService {
     @Override
     public CompletableFuture<ConfigurationData> getConfiguration(Integer id) {
         Optional<ConfigurationEntity> data = configurationRepository.findById(id);
-        Configuration domainConfiguration = Configuration.of(data.get().getTemperatureMax(), data.get().getTemperatureMin());
+        Configuration domainConfiguration = Configuration.of(TemperatureMin.of(data.get().getTemperatureMin()), TemperatureMax.of(data.get().getTemperatureMax()));
         return CompletableFuture.completedFuture(ConfigurationResponse.of(domainConfiguration));
     }
 
     @Override
-    public CompletableFuture<Void> setConfiguration(Integer id, Integer minTemp, Integer maxTemp) {
+    public CompletableFuture<Void> setConfiguration(Integer id, Configuration configuration) {
         ConfigurationEntity entity = new ConfigurationEntity();
         entity.setId(id);
-        entity.setTemperatureMin(minTemp);
-        entity.setTemperatureMax(maxTemp);
+        entity.setTemperatureMin(configuration.getTemperatureMin());
+        entity.setTemperatureMax(configuration.getTemperatureMax());
         configurationRepository.save(entity);
         return CompletableFuture.completedFuture(null);
     }

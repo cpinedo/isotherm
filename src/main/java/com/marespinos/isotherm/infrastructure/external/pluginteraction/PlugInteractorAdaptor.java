@@ -1,7 +1,6 @@
 package com.marespinos.isotherm.infrastructure.external.pluginteraction;
 
-import com.marespinos.isotherm.application.services.pluginteractor.PlugInteractor;
-import com.marespinos.isotherm.infrastructure.projectconfiguration.FrameworkConfiguration;
+import com.marespinos.isotherm.domain.services.pluginteractor.PlugInteractor;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;

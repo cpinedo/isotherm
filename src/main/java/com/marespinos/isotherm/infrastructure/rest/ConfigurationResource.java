@@ -4,10 +4,7 @@ import com.marespinos.isotherm.application.getconfiguration.GetConfigurationComm
 import com.marespinos.isotherm.application.services.configuration.ConfigurationData;
 import com.marespinos.isotherm.application.setconfiguration.SetConfigurationCommand;
 import com.marespinos.isotherm.framework.CommandExecutor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.CompletableFuture;
 

@@ -13,6 +13,9 @@ public class ConfigurationDto {
         this.minTemperature = minTemperature;
     }
 
+    public ConfigurationDto() {
+    }
+
     public Integer getMaxTemperature() {
         return maxTemperature;
     }

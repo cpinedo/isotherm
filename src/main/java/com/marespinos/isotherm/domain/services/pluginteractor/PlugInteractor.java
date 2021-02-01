@@ -1,4 +1,4 @@
-package com.marespinos.isotherm.application.services.pluginteractor;
+package com.marespinos.isotherm.domain.services.pluginteractor;
 
 public interface PlugInteractor {
     void turnSwitchOn();

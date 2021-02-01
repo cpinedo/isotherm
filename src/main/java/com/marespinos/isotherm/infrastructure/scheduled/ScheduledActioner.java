@@ -1,10 +1,13 @@
 package com.marespinos.isotherm.infrastructure.scheduled;
 
-import com.marespinos.isotherm.domain.Isotherm;
-import com.marespinos.isotherm.application.services.pluginteractor.PlugInteractor;
 import com.marespinos.isotherm.application.services.temperatureReader.TemperatureReader;
-import com.marespinos.isotherm.application.services.temperatureReader.TemperatureReading;
 import com.marespinos.isotherm.domain.Configuration;
+import com.marespinos.isotherm.domain.Isotherm;
+import com.marespinos.isotherm.domain.TemperatureInstantData;
+import com.marespinos.isotherm.domain.services.pluginteractor.PlugInteractor;
+import com.marespinos.isotherm.domain.valueobjects.TemperatureMax;
+import com.marespinos.isotherm.domain.valueobjects.TemperatureMin;
+import com.marespinos.isotherm.infrastructure.external.temperaturereader.TemperatureReadingResponse;
 import com.marespinos.isotherm.infrastructure.repository.ConfigurationEntity;
 import com.marespinos.isotherm.infrastructure.repository.ConfigurationRepository;
 import org.slf4j.Logger;
@@ -40,15 +43,15 @@ public class ScheduledActioner {
             //TODO: Use proper exceptions
             throw new RuntimeException();
 
-        Configuration configuration = Configuration.of(configurationEntity.get().getTemperatureMax(), configurationEntity.get().getTemperatureMin());
-        TemperatureReading reading = temperatureReader.getTemperature();
+        Configuration configuration = Configuration.of(TemperatureMin.of(configurationEntity.get().getTemperatureMin()), TemperatureMax.of(configurationEntity.get().getTemperatureMax()));
+        TemperatureReadingResponse reading = temperatureReader.getTemperature();
 
-        if(isotherm.doMaintenance(configuration, reading, plugInteractor, lastStatus))
-            lastStatus=!lastStatus;
+        if (isotherm.doMaintenance(configuration, TemperatureInstantData.of(reading.getRawTemperatures()), plugInteractor, lastStatus))
+            lastStatus = !lastStatus;
     }
 
     @Scheduled(fixedDelay = 30000)
-    public void refreshStatus(){
+    public void refreshStatus() {
         lastStatus = plugInteractor.retrieveSwitchStatus();
     }
 }

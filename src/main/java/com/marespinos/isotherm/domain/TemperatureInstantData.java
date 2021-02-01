@@ -1,26 +1,29 @@
 package com.marespinos.isotherm.domain;
 
+import com.marespinos.isotherm.domain.valueobjects.MeanTemperature;
+import com.marespinos.isotherm.domain.valueobjects.TemperatureReadingsList;
+
 import java.util.List;
 
 public class TemperatureInstantData {
 
-    private final List<Double> temperatures;
-    private final Double mean;
+    private final TemperatureReadingsList temperatures;
+    private final MeanTemperature mean;
 
-    private TemperatureInstantData(List<Double> temperatures) {
+    private TemperatureInstantData(TemperatureReadingsList temperatures) {
         this.temperatures = temperatures;
-        mean = temperatures.stream().mapToDouble(Double::doubleValue).average().orElse(-1);
+        mean = MeanTemperature.of(temperatures);
     }
 
     public static TemperatureInstantData of(List<Double> rawData) {
-        return new TemperatureInstantData(rawData);
+        return new TemperatureInstantData(TemperatureReadingsList.of(rawData));
     }
 
     public List<Double> getRawTemperatures() {
-        return temperatures;
+        return temperatures.getList();
     }
 
     public Double getMean() {
-        return mean;
+        return mean.getTemperature();
     }
 }
